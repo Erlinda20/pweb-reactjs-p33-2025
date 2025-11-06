@@ -21,28 +21,23 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-blue-100 to-blue-300">
-      <div className="bg-white p-8 rounded-2xl shadow-xl w-[22rem]">
-        <div className="flex flex-col items-center mb-6">
-          <h1 className="text-4xl font-extrabold text-gray-800 flex items-center gap-2">
-            IT Literature <span>📚</span>
-          </h1>
-          <p className="text-gray-500 text-sm mt-1 text-center">
-            Akses katalog buku favoritmu dengan mudah
-          </p>
-        </div>
+    <div className="min-h-screen flex justify-center items-center bg-gray-100">
+      <div className="bg-white p-8 rounded-xl shadow-md w-[22rem]">
+        <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">
+          IT Literature 
+        </h1>
 
-        <h2 className="text-2xl font-semibold text-blue-600 text-center mb-4">
+        <h2 className="text-xl font-medium text-center text-gray-700 mb-4">
           Login
         </h2>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-full">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-gray-800 focus:outline-none"
             required
           />
           <input
@@ -50,7 +45,7 @@ export default function Login() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-gray-800 focus:outline-none"
             required
           />
 
@@ -60,7 +55,7 @@ export default function Login() {
 
           <button
             type="submit"
-            className="bg-blue-500 text-white font-medium py-2 rounded-md hover:bg-blue-600 transition duration-200"
+            className="bg-gray-900 text-white font-medium py-2 rounded-md hover:bg-gray-800 transition"
           >
             Login
           </button>
@@ -70,7 +65,7 @@ export default function Login() {
           Belum punya akun?{" "}
           <a
             href="/register"
-            className="text-blue-500 hover:underline font-medium"
+            className="text-gray-800 font-medium hover:underline"
           >
             Daftar di sini
           </a>
