@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../api/auth";
 import { setToken } from "../utils/storage";
+import Alert, { showAlert } from "../components/Alerts";
+
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -70,6 +72,39 @@ export default function Login() {
             Daftar di sini
           </a>
         </p>
+        <p className="text-center text-xs text-gray-400 mt-6">
+          Test alert component
+        </p>
+        <button onClick={() => showAlert("This is a success alert!", "success", 10000)} className="bg-green-500 text-white font-medium py-1 px-2 rounded-md hover:bg-green-600 transition mr-2">
+          Show Success Alert
+        </button>
+        <button onClick={() => showAlert("This is an error alert!", "error", 10000)} className="bg-red-500 text-white font-medium py-1 px-2 rounded-md hover:bg-red-600 transition">
+          Show Error Alert
+        </button>
+        <button onClick={() => showAlert("This is an info alert with description!", "info", 10000, {description: "Additional details about the info alert."})} className="bg-blue-500 text-white font-medium py-1 px-2 rounded-md hover:bg-blue-600 transition mt-2">
+          Show Info Alert with Description
+        </button>
+        <button onClick={() => showAlert(
+            "Delete Failed",
+            "error",
+            8000,
+            {
+                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid pariatur, ipsum similique veniam quo totam eius aperiam dolorum.",
+                actions: [
+                    {
+                        label: "Retry",
+                        variant: "primary",
+                        onClick: () => console.log("Retry")
+                    },
+                    {
+                        label: "Dismiss",
+                        variant: "secondary",
+                        onClick: () => console.log("Dismissed")
+                    }
+                ]
+            })} className="bg-yellow-500 text-white font-medium py-1 px-2 rounded-md hover:bg-yellow-600 transition mt-2">
+          Show Warning Alert
+        </button>
       </div>
     </div>
   );

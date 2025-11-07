@@ -4,6 +4,7 @@ import Register from "../pages/Register";
 import BooksList from "../pages/BooksList";
 import BookDetail from "../pages/BookDetail";
 import AddBook from "../pages/AddBook";
+import ManageBooks from "../pages/ManageBooks";
 import Transactions from "../pages/Transactions";
 import TransactionDetail from "../pages/TransactionDetail";
 import ProtectedRoute from "./ProtectedRoute";
@@ -34,10 +35,10 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/books/:id",
+        path: "/books/manage",
         element: (
           <ProtectedRoute>
-            <BookDetail />
+            <ManageBooks />
           </ProtectedRoute>
         ),
       },
@@ -46,6 +47,22 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <AddBook />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/books/edit/:id",
+        element: (
+          <ProtectedRoute>
+            <AddBook />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/books/:id",
+        element: (
+          <ProtectedRoute>
+            <BookDetail />
           </ProtectedRoute>
         ),
       },

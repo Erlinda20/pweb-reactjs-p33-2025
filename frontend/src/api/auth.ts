@@ -1,6 +1,6 @@
 import { getToken } from "../utils/storage";
 
-const BASE_URL = "http://localhost:3000/api"; // sesuaikan kalau perlu
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 export async function login(email: string, password: string) {
   const res = await fetch(`${BASE_URL}/auth/login`, {
@@ -9,8 +9,13 @@ export async function login(email: string, password: string) {
     body: JSON.stringify({ email, password }),
   });
   if (!res.ok) throw new Error("Login gagal");
-  return res.json() as Promise<{ token: string }>;
+
+  const data = (await res.json()) as { token: string };
+  sessionStorage.setItem("token", data.token);
+  return data;
 }
+
+
 
 export async function register(email: string, password: string) {
   const res = await fetch(`${BASE_URL}/auth/register`, {
@@ -19,7 +24,7 @@ export async function register(email: string, password: string) {
     body: JSON.stringify({ email, password }),
   });
   if (!res.ok) throw new Error("Registrasi gagal");
-  return res.json();
+  return res.json() as Promise<{ token: string }>;
 }
 
 // 👉 INI YANG KURANG: ambil profil user yang sedang login
