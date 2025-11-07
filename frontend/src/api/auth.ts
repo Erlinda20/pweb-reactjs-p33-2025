@@ -1,4 +1,4 @@
-import { getToken } from "../utils/storage";
+import { setToken } from "../utils/storage";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -9,13 +9,12 @@ export async function login(email: string, password: string) {
     body: JSON.stringify({ email, password }),
   });
   if (!res.ok) throw new Error("Login gagal");
-
-  const data = (await res.json()) as { token: string };
-  sessionStorage.setItem("token", data.token);
+  const data = (await res.json()) as { data: { access_token: string } };
+  const token = data?.data?.access_token;
+  if (!token) throw new Error("Token tidak ditemukan");
+  setToken(token); // now stored in sessionStorage via storage util
   return data;
 }
-
-
 
 export async function register(email: string, password: string) {
   const res = await fetch(`${BASE_URL}/auth/register`, {
@@ -24,14 +23,19 @@ export async function register(email: string, password: string) {
     body: JSON.stringify({ email, password }),
   });
   if (!res.ok) throw new Error("Registrasi gagal");
-  return res.json() as Promise<{ token: string }>;
+  // If backend returns access_token similar to login, persist it; otherwise just return response
+  const data = await res.json();
+  const maybeToken = data?.data?.access_token || data?.token;
+  if (maybeToken) setToken(maybeToken);
+  return data as any;
 }
 
 // 👉 INI YANG KURANG: ambil profil user yang sedang login
 export type MeResponse = { email: string };
 
 export async function getUser(): Promise<MeResponse> {
-  const token = getToken();
+  // token is now consistently read by the backend via Authorization header set here
+  const token = sessionStorage.getItem("token");
   if (!token) throw new Error("Token tidak ditemukan");
 
   const res = await fetch(`${BASE_URL}/auth/me`, {
